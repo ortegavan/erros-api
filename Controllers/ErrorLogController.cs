@@ -23,4 +23,14 @@ public class ErrorLogController : ControllerBase
         ds.Save(error);
         return CreatedAtAction(nameof(Get), new { id = error.Id }, error);
     }
+
+    [HttpPost("bulk")]
+    public IActionResult PostBulk([FromBody] IList<ErrorLog> errors)
+    {
+        foreach (var error in errors)
+        {
+            ds.Save(error);
+        }
+        return CreatedAtAction(nameof(Get), new { id = errors.First().Id }, errors);
+    }
 }
